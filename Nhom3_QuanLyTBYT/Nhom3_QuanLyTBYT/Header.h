@@ -91,30 +91,50 @@ int DocFile(BSTree& root, char* filename)
 }
 void XuatTieuDe()
 {
-	cout << setiosflags(ios::left)
-		<< setw(10) << "MaTB"
-		<< setw(30) << "Ten Thiet Bi"
-		<< setw(30) << "Ngay Nhap"
-		<< setw(30) << "Ngay Su Dung"
-		<< setw(10) << "So luong"
-		<< setw(30) << "Loai Thiet Bi";
+	int i;
 	cout << endl;
+	cout << '.';
+	for (i = 1; i <= 100; i++)
+		cout << '_';
+	cout << '.' << endl;
+	cout << setiosflags(ios::left);
+	cout << '|'
+		<< setw(8) << "MaTB"
+		<< '|'
+		<< setw(30) << "Ten Thiet Bi"
+		<< '|'
+		<< setw(15) << "Ngay Nhap"
+		<< '|'
+		<< setw(15) << "Ngay Su Dung"
+		<< '|'
+		<< setw(12) << "So luong"
+		<< '|'
+		<< setw(15) << "Loai Thiet Bi"
+		<< '|';
+	cout << endl << '|';
+	for (i = 1; i <= 100; i++)
+		cout << '-';
+	cout << '|';
+
 }
 void XuatTB(TBYT x)
 {
+	cout << endl << '|';
 	cout << setiosflags(ios::left)
-		<< setw(10) << x.maTB
-		<< setw(30) << x.TenTB
-		<< setw(10)
+		<< setw(8) << x.maTB
+		<< '|' << setw(30) << x.TenTB
+		<< '|' << setw(15)
 		<< setw(2) << x.ngayNhap.ngay << '/'
 		<< setw(2) << x.ngayNhap.thang << '/'
-		<< setw(4) << x.ngayNhap.nam
-		<< setw(10)
+		<< setw(9) << x.ngayNhap.nam
+		<< '|' << setw(15)
 		<< setw(2) << x.ngaySD.ngay << '/'
 		<< setw(2) << x.ngaySD.thang << '/'
-		<< setw(4) << x.ngaySD.nam
-		<< setw(10) << x.soLuong
-		<< setw(30) << x.LoaiTB;
+		<< setw(9) << x.ngaySD.nam
+		<< '|' << setw(12) << x.soLuong
+		<< '|' << setw(15) << x.LoaiTB
+		<< '|';
+
 }
 void Xuat_NLR(BSTree root)
 {
