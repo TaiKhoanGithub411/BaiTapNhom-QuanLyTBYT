@@ -9,10 +9,20 @@ using namespace std;
 void ChayChuongTrinh();
 int main()
 {
-	BSTree root;
-	DocFile(root, (char*)"TBYT.txt");
-	XuatTieuDe();
-	Xuat_NLR(root);
-	system("PAUSE");
+	ChayChuongTrinh();
 	return 1;
+}
+void ChayChuongTrinh()
+{
+	BSTree root;
+	CreatRoot(root);
+	int menu;
+	do
+	{
+		system("CLS");
+		MenuChinh();
+		menu = ChonMenu(6);
+		XulyMenuChinh(menu, root);
+		system("PAUSE");
+	} while (menu>0);
 }

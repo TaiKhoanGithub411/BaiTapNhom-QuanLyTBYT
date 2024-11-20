@@ -12,7 +12,7 @@ struct TBYT
 	Date ngayNhap;
 	Date ngaySD;
 	int soLuong;
-	char LoaiTB[30];
+	char PhongSD[30];
 };
 typedef TBYT Data;
 struct BSNode
@@ -30,6 +30,8 @@ int DocFile(BSTree& root, char* filename);
 void XuatTieuDe();
 void XuatTB(TBYT x);
 void Xuat_NLR(BSTree root);
+void Xuat_LNR(BSTree root);
+void Xuat_LRN(BSTree root);
 //================================================================
 BSNode* CreatNode(TBYT x)
 {
@@ -81,7 +83,7 @@ int DocFile(BSTree& root, char* filename)
 		in >> x.ngaySD.thang;
 		in >> x.ngaySD.nam;
 		in >> x.soLuong;
-		in >> x.LoaiTB;
+		in >> x.PhongSD;
 		kq = InsertNode(root, x);
 		if (kq == 0 || kq == -1)
 			return 0;
@@ -109,7 +111,7 @@ void XuatTieuDe()
 		<< '|'
 		<< setw(12) << "So luong"
 		<< '|'
-		<< setw(15) << "Loai Thiet Bi"
+		<< setw(15) << "Phong SD"
 		<< '|';
 	cout << endl << '|';
 	for (i = 1; i <= 100; i++)
@@ -132,7 +134,7 @@ void XuatTB(TBYT x)
 		<< setw(2) << x.ngaySD.thang << '/'
 		<< setw(9) << x.ngaySD.nam
 		<< '|' << setw(12) << x.soLuong
-		<< '|' << setw(15) << x.LoaiTB
+		<< '|' << setw(15) << x.PhongSD
 		<< '|';
 
 }
@@ -143,5 +145,23 @@ void Xuat_NLR(BSTree root)
 		XuatTB(root->infor);
 		Xuat_NLR(root->left);
 		Xuat_NLR(root->right);
+	}
+}
+void Xuat_LNR(BSTree root)
+{
+	if (root != NULL)
+	{
+		Xuat_LNR(root->left);
+		XuatTB(root->infor);
+		Xuat_LNR(root->right);
+	}
+}
+void Xuat_LRN(BSTree root)
+{
+	if (root != NULL)
+	{
+		Xuat_LRN(root->left);
+		Xuat_LRN(root->right);
+		XuatTB(root->infor);
 	}
 }
