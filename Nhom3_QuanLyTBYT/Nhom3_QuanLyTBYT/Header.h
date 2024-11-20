@@ -53,6 +53,7 @@ int InsertNode(BSTree& root, TBYT x)
 	{
 		if (_stricmp(root->infor.maTB, x.maTB) == 0)
 			return 0;
+
 		if (_stricmp(root->infor.maTB, x.maTB) > 0)
 			return InsertNode(root->left, x);
 		else
