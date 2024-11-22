@@ -75,7 +75,8 @@ void XuLyMenuTK(int menu, BSTree root)
 {
 	int kq, ngay, thang, nam;
 	KeyType ma;
-	BSTree p;
+	BSTree p, q;
+	CreatRoot(p); CreatRoot(q);
 	char x[30];
 	switch (menu)
 	{
@@ -83,36 +84,28 @@ void XuLyMenuTK(int menu, BSTree root)
 		cout << "\n0.Tro ve chuong trinh chinh";
 		return;
 	case 1:
-		cout << "\n1.Tim kiem theo ma";
-		XuatTieuDe();
+		cout << "\n1. Tim kiem theo ma\n";
 		Xuat_NLR(root);
 		cout << "\nNhap ma thiet bi can tim: ";
 		cin >> ma;
-		p = Search_MaTB(root, ma);
-		if (p != NULL)
+		q = Search_MaTB(root, ma, p);
+		if (q != NULL) 
 		{
-			cout << "\nThiet bi co ma " << ma << "la\n";
+			cout << "\nThiet bi co ma " << ma << " la:\n";
 			XuatTieuDe();
-			XuatTB(p->infor);
+			XuatTB(q->infor);
 		}
-		else
-			cout << "\nKhong co ma " << ma << " trong danh sach";
+		else 
+			cout << "\nKhong co ma " << ma << " trong danh sach.";
 		break;
+
 	case 2:
 		cout << "\n2.Tim kiem theo ten\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
 		cout << "\nNhap ten thiet bi can tim: ";
 		cin >> x;
-		p = Search_TenTB(root, x);
-		if (p != NULL)
-		{
-			cout << "\nThiet bi co ten " <<x << "la\n";
-			XuatTieuDe();
-			Xuat_LNR(p);
-		}
-		else
-			cout << "\nKhong co ten " << x << " trong danh sach";
+		Xuat_TatCaTB(root, x);
 		break;
 	case 3:
 		cout << "\n3.Tim kiem theo ngay/thang/nam nhap\n";
