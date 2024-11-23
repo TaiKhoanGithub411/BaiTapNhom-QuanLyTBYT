@@ -83,19 +83,20 @@ void XuLyMenuTK(int menu, BSTree root)
 		cout << "\n0.Tro ve chuong trinh chinh";
 		return;
 	case 1:
-		cout << "\n1. Tim kiem theo ma\n";
+		cout << "\n1.Tim kiem theo ma";
+		XuatTieuDe();
 		Xuat_NLR(root);
 		cout << "\nNhap ma thiet bi can tim: ";
 		cin >> ma;
-		q = Search_MaTB(root, ma, p);
-		if (q != NULL)
+		p = Search_MaTB(root, ma);
+		if (p != NULL)
 		{
-			cout << "\nThiet bi co ma " << ma << " la:\n";
+			cout << "\nThiet bi co ma " << ma << "la\n";
 			XuatTieuDe();
-			XuatTB(q->infor);
+			XuatTB(p->infor);
 		}
 		else
-			cout << "\nKhong co ma " << ma << " trong danh sach.";
+			cout << "\nKhong co ma " << ma << " trong danh sach";
 		break;
 
 	case 2:
@@ -104,7 +105,13 @@ void XuLyMenuTK(int menu, BSTree root)
 		Xuat_NLR(root);
 		cout << "\nNhap ten thiet bi can tim: ";
 		cin >> x;
-		Xuat_TatCaTB_TheoTen(root, x);
+		p = Search_TenTB(root, x);
+		if (p != NULL)
+		{
+			cout << "\nThiet bi co ten " << x << "la\n";
+			XuatTieuDe();
+			Xuat_LNR(p);
+		}
 		break;
 	case 3:
 		cout << "\n3.Tim kiem theo ngay/thang/nam nhap\n";
@@ -113,38 +120,49 @@ void XuLyMenuTK(int menu, BSTree root)
 		cout << "\nNhap ngay: "; cin >> ngay;
 		cout << "\nNhap thang: "; cin >> thang;
 		cout << "\nNhap nam: "; cin >> nam;
-		Xuat_TatCaTB_TheoNgayNhap(root, TaoNgayThangNam(ngay, thang, nam), p);
+		p = Search_NgayThangNamNhap(root, TaoNgayThangNam(ngay, thang, nam));
+		if (p != NULL)
+		{
+			cout << "\Thiet bi co ngay nhap " << ngay << "/" << thang << "/" << nam << "\n";
+			XuatTieuDe();
+			Xuat_LNR(p);
+		}
+		else
+			cout << "\Khong co thiet bi co ngay nhap " << ngay << "/" << thang << "/" << nam << "\n";
 		break;
-	//case 4:
-	//	cout << "\n4.Tim kiem theo ngay/thang/nam su dung\n";
-	//	XuatTieuDe();
-	//	Xuat_NLR(root);
-	//	cout << "\nNhap ngay: "; cin >> ngay;
-	//	cout << "\nNhap thang: "; cin >> thang;
-	//	cout << "\nNhap nam: "; cin >> nam;
-	//	p = Search_NgayThangNamSD(root, TaoNgayThangNam(ngay, thang, nam));
-	//	if (p != NULL)
-	//	{
-	//		cout << "\Thiet bi co ngay su dung " << ngay << "/" << thang << "/" << nam << "\n";
-	//		XuatTieuDe();
-	//		Xuat_LNR(p);
-	//	}
-	//	else
-	//		cout << "\Khong co thiet bi co ngay su dung " << ngay << "/" << thang << "/" << nam << "\n";
-	//	break;
+	case 4:
+		cout << "\n4.Tim kiem theo ngay/thang/nam su dung\n";
+		XuatTieuDe();
+		Xuat_NLR(root);
+		cout << "\nNhap ngay: "; cin >> ngay;
+		cout << "\nNhap thang: "; cin >> thang;
+		cout << "\nNhap nam: "; cin >> nam;
+		p = Search_NgayThangNamSD(root, TaoNgayThangNam(ngay, thang, nam));
+		if (p != NULL)
+		{
+			cout << "\Thiet bi co ngay su dung " << ngay << "/" << thang << "/" << nam << "\n";
+			XuatTieuDe();
+			Xuat_LNR(p);
+		}
+		else
+			cout << "\Khong co thiet bi co ngay su dung " << ngay << "/" << thang << "/" << nam << "\n";
+		break;
 	case 5:
-		cout << "\n5.Tim kiem theo phong su dung\n";
+		cout << "\n4.Tim kiem theo phong su dung\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
 		cout << "\nNhap phong su dung thiet bi can tim: ";
 		cin >> x;
-		/*Xuat_TatCaTB_TheoPhongSD(root, x, p);*/
-		if (Search_PhongSD(root, x, p) != NULL)
+		p = Search_PhongSD(root, x);
+		if (p != NULL)
 		{
-			Xuat_TatCaTB_TheoPhongSD(root, x, p);
+			cout << "\nPhong su dung thiet bi co ten " << x << "\n";
+			XuatTieuDe();
+			Xuat_LNR(p);
 		}
 		else
-			cout << "\nKhong tim thay\n";
+			cout << "\nKhong co phong " << x << " trong danh sach";
 		break;
 	}
+	
 }

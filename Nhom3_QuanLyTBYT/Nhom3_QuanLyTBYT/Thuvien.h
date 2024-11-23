@@ -1,69 +1,72 @@
 //======================================================
-BSTree Search_MaTB(BSTree root, KeyType ma, BSTree& rootparent);
-BSTree Search_TenTB(BSTree root, char ten[30], BSTree& parent);
-BSTree Search_PhongSD(BSTree root, char phong[30], BSTree& parent);
+BSTree Search_MaTB(BSTree root, KeyType ma);
+BSTree Search_TenTB(BSTree root, char ten[30]);
+BSTree Search_PhongSD(BSTree root, char phong[30]);
 Date TaoNgayThangNam(int ngay, int thang, int nam);
-BSTree Search_NgayThangNamNhap(BSTree root, Date nhap, BSTree& parent);
-//BSTree Search_NgayThangNamSD(BSTree root, Date nhap);
-void Xuat_TatCaTB_TheoTen(BSTree root, char ten[30]);
-void Xuat_TatCaTB_TheoPhongSD(BSTree root, char phong[30], BSTree& parent);
-void Xuat_TatCaTB_TheoNgayNhap(BSTree root, Date nhap, BSTree& parent);
+BSTree Search_NgayThangNamNhap(BSTree root, Date nhap);
+BSTree Search_NgayThangNamSD(BSTree root, Date nhap);
 //======================================================
-BSTree Search_MaTB(BSTree root, KeyType ma, BSTree& rootparent)
+BSTree Search_MaTB(BSTree root, KeyType ma)
 {
-    CreatRoot(rootparent);
-    BSTree current = root;
-    int dk;
-    while (current != NULL)
+    if (root != NULL)
     {
-        dk = strcmp(current->infor.maTB, ma);
-        if (dk == 0)
-            return current;
-        rootparent = current;
-        if (dk < 0)
-            current = current->right;
+        if (_stricmp(root->infor.maTB, ma) == 0)
+            return root;
         else
-            current = current->left;
+            if (_stricmp(root->infor.maTB, ma) < 0)
+                return Search_MaTB(root->right, ma);
+            else
+                return Search_MaTB(root->left, ma);
     }
     return NULL;
 }
-BSTree Search_TenTB(BSTree root, char ten[30], BSTree& parent)
+BSTree Search_TenTB(BSTree root, char ten[30])
 {
-    if (root == NULL)
-        return NULL;
-    int dk = strcmp(root->infor.TenTB, ten);
-    if (dk == 0)
-        return parent;
-    if (dk < 0)
+    BSTree result;
+    CreatRoot(result);
+    if (root != NULL)
     {
-        parent = root;
-        return Search_TenTB(root->right, ten, parent);
+        if (_stricmp(root->infor.TenTB, ten) == 0)
+        {
+            InsertNode(result, root->infor);
+        }
+        if (root->left != NULL)
+        {
+            BSTree leftResult = Search_TenTB(root->left, ten);
+            if (leftResult != NULL)
+                InsertNode(result, leftResult->infor);
+        }
+        if (root->right != NULL)
+        {
+            BSTree rightResult = Search_TenTB(root->right, ten);
+            if (rightResult != NULL)
+                InsertNode(result, rightResult->infor);
+        }
     }
-    else
-    {
-        parent = root;
-        return Search_TenTB(root->left, ten, parent);
-    }
+    return result;
 }
-BSTree Search_PhongSD(BSTree root, char phong[30], BSTree& parent)
+BSTree Search_PhongSD(BSTree root, char phong[30])
 {
-    while (root != NULL)
+    BSTree result;
+    CreatRoot(result);
+    if (root != NULL)
     {
-        int dk = strcmp(root->infor.PhongSD, phong);
-        if (dk == 0)
-            return parent;
-        if (dk < 0)
+        if (_stricmp(root->infor.PhongSD, phong) == 0)
+            InsertNode(result, root->infor);
+        if (root->left != NULL)
         {
-            parent = root;
-            return Search_PhongSD(root->right, phong, parent);
+            BSTree left = Search_PhongSD(root->left, phong);
+            if (left != NULL)
+                InsertNode(result, left->infor);
         }
-        else
+        if (root->right != NULL)
         {
-            parent = root;
-            return Search_PhongSD(root->left, phong, parent);
+            BSTree right = Search_PhongSD(root->right, phong);
+            if (right != NULL)
+                InsertNode(result, right->infor);
         }
     }
-    return NULL;
+    return result;
 }
 Date TaoNgayThangNam(int ngay, int thang, int nam)
 {
@@ -73,62 +76,49 @@ Date TaoNgayThangNam(int ngay, int thang, int nam)
     x.nam = nam;
     return x;
 }
-BSTree Search_NgayThangNamNhap(BSTree root, Date nhap, BSTree& parent)
+BSTree Search_NgayThangNamNhap(BSTree root, Date nhap)
 {
-    parent = NULL;
-    while (root != NULL)
-    {
-        bool dk = (root->infor.ngayNhap.ngay == nhap.ngay &&
-            root->infor.ngayNhap.thang == nhap.thang &&
-            root->infor.ngayNhap.nam == nhap.nam);
-
-        if (dk)
-            return root;
-        parent = root;
-        if (nhap.nam < root->infor.ngayNhap.nam ||
-            (nhap.nam == root->infor.ngayNhap.nam && nhap.thang < root->infor.ngayNhap.thang) ||
-            (nhap.nam == root->infor.ngayNhap.nam && nhap.thang == root->infor.ngayNhap.thang && nhap.ngay < root->infor.ngayNhap.ngay))
-            root = root->left;
-        else
-            root = root->right;
-    }
-    return NULL;
-}
-void Xuat_TatCaTB_TheoTen(BSTree root, char ten[30])
-{
+    BSTree result;
+    CreatRoot(result);
     if (root != NULL)
     {
-        if (strcmp(root->infor.TenTB, ten) == 0)
-            XuatTB(root->infor);
-        Xuat_TatCaTB_TheoTen(root->left, ten);
-        Xuat_TatCaTB_TheoTen(root->right, ten);
-    }
-}
-void Xuat_TatCaTB_TheoPhongSD(BSTree root, char phong[30],BSTree&parent)
-{
-    if (root != NULL)
-    {
-        if (strcmp(root->infor.PhongSD, phong) == 0)
-            XuatTB(root->infor);
-        Xuat_TatCaTB_TheoPhongSD(root->left, phong, parent);
-        Xuat_TatCaTB_TheoPhongSD(root->right, phong, parent);
-    }
-}
-void Xuat_TatCaTB_TheoNgayNhap(BSTree root, Date nhap,BSTree&parent)
-{
-    BSTree p = Search_NgayThangNamNhap(root, nhap, parent);
-    if (p != NULL)
-    {
-        if (root != NULL)
+        if (root->infor.ngayNhap.ngay == nhap.ngay && root->infor.ngayNhap.thang == nhap.thang && root->infor.ngayNhap.nam == nhap.nam)
+            InsertNode(result, root->infor);
+        if (root->left != NULL)
         {
-            if (root->infor.ngayNhap.ngay == nhap.ngay &&
-                root->infor.ngayNhap.thang == nhap.thang &&
-                root->infor.ngayNhap.nam == nhap.nam)
-                XuatTB(root->infor);
-            Xuat_TatCaTB_TheoNgayNhap(root->left, nhap, parent);
-            Xuat_TatCaTB_TheoNgayNhap(root->right, nhap, parent);
+            BSTree left = Search_NgayThangNamNhap(root->left, nhap);
+            if (left != NULL)
+                InsertNode(result, left->infor);
+        }
+        if (root->right != NULL)
+        {
+            BSTree right = Search_NgayThangNamNhap(root->right, nhap);
+            if (right != NULL)
+                InsertNode(result, right->infor);
         }
     }
-    else
-        cout << "\nKhong tim thay\n";
+    return result;
+}
+BSTree Search_NgayThangNamSD(BSTree root, Date nhap)
+{
+    BSTree result;
+    CreatRoot(result);
+    if (root != NULL)
+    {
+        if (root->infor.ngaySD.ngay == nhap.ngay && root->infor.ngaySD.thang == nhap.thang && root->infor.ngaySD.nam == nhap.nam)
+            InsertNode(result, root->infor);
+        if (root->left != NULL)
+        {
+            BSTree left = Search_NgayThangNamSD(root->left, nhap);
+            if (left != NULL)
+                InsertNode(result, left->infor);
+        }
+        if (root->right != NULL)
+        {
+            BSTree right = Search_NgayThangNamSD(root->right, nhap);
+            if (right != NULL)
+                InsertNode(result, right->infor);
+        }
+    }
+    return result;
 }
