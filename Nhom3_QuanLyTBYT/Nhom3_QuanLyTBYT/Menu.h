@@ -269,6 +269,13 @@ void XuLyMenuXoa(int menu, BSTree& root)
 	case 2:
 		cout << "\n2. Xoa theo ten";
 		XuatTieuDe();
+		Xuat_NLR(root);
+		cout << "\nNhap ten thiet bi can xoa: ";
+		cin >> x;
+		cout << "\nDanh sach sau khi xoa thiet bi co ten " << x << " la\n";
+		DeleteMaTB(root, x);
+		XuatTieuDe();
+		Xuat_NLR(root);
 		break;
 	case 3:
 		cout << "\n3. Xoa theo ngay thang nam nhap";
@@ -277,6 +284,13 @@ void XuLyMenuXoa(int menu, BSTree& root)
 	case 4:
 		cout << "\n4. Xoa theo phong su dung";
 		XuatTieuDe();
+		Xuat_NLR(root);
+		cout << "\nNhap phong su dung can xoa: ";
+		cin >> x;
+		cout << "\nDanh sach sau khi xoa phong su dung " << x << " la\n";
+		DeletePhongSD(root, x);
+		XuatTieuDe();
+		Xuat_NLR(root);
 		break;
 	}
 }
