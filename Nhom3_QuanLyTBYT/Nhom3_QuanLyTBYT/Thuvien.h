@@ -5,31 +5,33 @@ BSTree Search_PhongSD(BSTree root, char phong[30]);
 Date TaoNgayThangNam(int ngay, int thang, int nam);
 BSTree Search_NgayThangNamNhap(BSTree root, Date nhap);
 BSTree Search_NgayThangNamSD(BSTree root, Date nhap);
+BSTree Search_Parent_MaTB(BSTree root, KeyType ma);
+BSTree Search_Parent_TenTB(BSTree root, char ten[30]);
 //======================================================
 BSTree Search_MaTB(BSTree root, KeyType ma)
 {
-    if (root != NULL)
+    if (root == NULL) return NULL;
+    BSTree parent = Search_Parent_MaTB(root, ma);
+    if (parent == NULL) 
     {
-        if (_stricmp(root->infor.maTB, ma) == 0)
+        if (_stricmp(root->infor.maTB, ma) == 0) 
             return root;
-        else
-            if (_stricmp(root->infor.maTB, ma) < 0)
-                return Search_MaTB(root->right, ma);
-            else
-                return Search_MaTB(root->left, ma);
+        else 
+            return NULL;
     }
-    return NULL;
+    if (_stricmp(root->infor.maTB, ma) < 0)
+        return Search_MaTB(root->right, ma);
+    else 
+        return Search_MaTB(root->left, ma);
 }
-BSTree Search_TenTB(BSTree root, char ten[30])
+BSTree Search_TenTB(BSTree root, char ten[30]) 
 {
     BSTree result;
     CreatRoot(result);
     if (root != NULL)
     {
         if (_stricmp(root->infor.TenTB, ten) == 0)
-        {
             InsertNode(result, root->infor);
-        }
         if (root->left != NULL)
         {
             BSTree leftResult = Search_TenTB(root->left, ten);
@@ -43,7 +45,7 @@ BSTree Search_TenTB(BSTree root, char ten[30])
                 InsertNode(result, rightResult->infor);
         }
     }
-    return result;
+        return result;
 }
 BSTree Search_PhongSD(BSTree root, char phong[30])
 {
@@ -121,4 +123,61 @@ BSTree Search_NgayThangNamSD(BSTree root, Date nhap)
         }
     }
     return result;
+}
+BSTree Search_Parent_MaTB(BSTree root, KeyType ma)
+{
+    BSTree parent = NULL, current = root;
+    while (current != NULL)
+    {
+        if (_stricmp(current->infor.maTB, ma)==0)
+            return parent;
+        if (_stricmp(current->infor.maTB, ma) < 0)
+        {
+            parent = current;
+            current = current->right;
+        }
+        else
+        {
+            parent = current;
+            current = current->left;
+        }
+    }
+}
+BSTree Search_Parent_TenTB(BSTree root, char ten[30])
+{
+    BSTree parent = NULL, current = root;
+    while (current!=NULL)
+    {
+        if (_stricmp(current->infor.TenTB, ten) == 0)
+            return parent;
+        if (_stricmp(current->infor.TenTB, ten) < 0)
+        {
+            parent = current;
+            current = current->right;
+        }
+        else
+        {
+            parent = current;
+            current = current->left;
+        }
+    }
+}
+BSTree Search_Parent_PhongSD(BSTree root, char phong[30])
+{
+    BSTree parent = NULL, current = root;
+    while (current!=NULL)
+    {
+        if (_stricmp(current->infor.PhongSD, phong) == 0)
+            return parent;
+        if (_stricmp(current->infor.PhongSD, phong) < 0)
+        {
+            parent = current;
+            current = current->right;
+        }
+        else
+        {
+            parent = current;
+            current = current->left;
+        }
+    }
 }

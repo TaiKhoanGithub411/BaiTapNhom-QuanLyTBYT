@@ -4,6 +4,8 @@ int ChonMenu(int somenu);
 void XulyMenuChinh(int menu, BSTree& root);
 void MenuTK();
 void XuLyMenuTK(int menu, BSTree root);
+void MenuSapXep();
+void XuLyMenuSX(int menu, BSTree& root);
 //=============================================================================
 void MenuChinh()
 {
@@ -57,7 +59,18 @@ void XulyMenuChinh(int menu, BSTree& root)
 			XuLyMenuTK(chonmenu, root);
 			system("PAUSE");
 		} while (chonmenu > 0);
+	case 4:
+		do
+		{
+			system("CLS");
+			MenuSapXep();
+			chonmenu = ChonMenu(5);
+			XuLyMenuSX(chonmenu, root);
+			system("PAUSE");
+		} while (chonmenu > 0);
+		break;
 	}
+	
 }
 void MenuTK()
 {
@@ -165,4 +178,21 @@ void XuLyMenuTK(int menu, BSTree root)
 		break;
 	}
 	
+}
+void MenuSapXep()
+{
+	cout << "======================== MENU QUAN LY THIET BI Y TE ==================================";
+	cout << "\n0.Tro ve chuong trinh chinh";
+	cout << "\n1.Sap xep theo ma thiet bi";
+	cout << "\n2.Sap xep theo ten";
+	cout << "\n3.Sap xep theo phong su dung";
+}
+void XuLyMenuSX(int menu, BSTree& root)
+{
+	switch (menu)
+	{
+	case 0:
+		cout << "\n0.Tro ve chuong trinh chinh\n";
+		return;
+	}
 }
