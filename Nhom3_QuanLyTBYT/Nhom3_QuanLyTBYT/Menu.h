@@ -261,16 +261,10 @@ void XuLyMenuXoa(int menu, BSTree& root)
 		Xuat_NLR(root);
 		cout << "\nNhap ma thiet bi can xoa: ";
 		cin >> ma;
-		p = Search_MaTB(root, ma);
-		if (p != NULL)
-		{
-			cout << "\nDanh sach sau khi xoa thiet bi co ma " << ma << " la\n";
-			XuatTieuDe();
-			DeleteMaTB(root, ma);
-			Xuat_NLR(root);
-		}
-		else
-			cout << "\nKhong co ma " << ma << " trong danh sach";
+		cout << "\nDanh sach sau khi xoa thiet bi co ma " << ma << " la\n";
+		DeleteMaTB(root, ma);
+		XuatTieuDe();
+		Xuat_NLR(root);
 		break;
 	case 2:
 		cout << "\n2. Xoa theo ten";

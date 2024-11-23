@@ -8,8 +8,8 @@ BSTree Search_NgayThangNamSD(BSTree root, Date nhap);
 BSTree Search_Parent_MaTB(BSTree root, KeyType ma);
 BSTree Search_Parent_TenTB(BSTree root, char ten[30]);
 BSTree FindMinRight(BSTree root);
-BSTree DeleteNode(BSTree root, BSTree Node);
-BSTree DeleteMaTB(BSTree root, KeyType ma);
+void DeleteNode(BSTree& root, BSTree node);
+void DeleteMaTB(BSTree& root, KeyType ma);
 //======================================================
 BSTree Search_MaTB(BSTree root, KeyType ma)
 {
@@ -184,54 +184,59 @@ BSTree Search_Parent_PhongSD(BSTree root, char phong[30])
         }
     }
 }
-BSTree FindMinRight(BSTree root)
+BSTree FindMinRight(BSTree root) 
 {
     if (root == NULL)
         return NULL;
+
     while (root->left != NULL)
         root = root->left;
     return root;
 }
-BSTree DeleteNode(BSTree root, BSTree Node)
+void DeleteNode(BSTree& root, BSTree nodetoDelete) 
 {
-    if (root == NULL || Node == NULL)
-        return root;
-    if (Node->left == NULL && Node->right == NULL)
+    if (nodetoDelete == NULL)
+        return;
+    if (nodetoDelete->left == NULL && nodetoDelete->right == NULL) 
     {
-        free(Node);
-        return NULL;
+        delete nodetoDelete;
+        root = NULL;
     }
-    if (Node->left == NULL)
+    else if (nodetoDelete->left == NULL)
     {
-        BSTree temp = Node->right;
-        free(Node);
-        return temp;
+        BSTree temp = nodetoDelete->right;
+        delete nodetoDelete;
+        root = temp;
     }
-    if (Node->right == NULL)
+    else if (nodetoDelete->right == NULL) 
     {
-        BSTree temp = Node->left;
-        free(Node);
-        return temp;
+        BSTree temp = nodetoDelete->left;
+        delete nodetoDelete;
+        root = temp;
     }
-    BSTree temp = FindMinRight(Node->right);
-    Node->infor = temp->infor;
-    Node->right = DeleteNode(Node->right, temp);
-    return root;
+    else 
+    {
+        BSTree minRight = FindMinRight(nodetoDelete->right);
+        nodetoDelete->infor = minRight->infor;
+        DeleteNode(nodetoDelete->right, minRight);
+    }
 }
-BSTree DeleteMaTB(BSTree root, KeyType ma)
+
+void DeleteMaTB(BSTree& root, KeyType ma) 
 {
+    if (root == NULL)
+        return;
     BSTree parent = Search_Parent_MaTB(root, ma);
-    if (parent == NULL)
-        return root;
-    BSTree Node = NULL;
-    if (_stricmp(parent->infor.maTB, ma) == 0)
-        Node = parent;
-    else
-    {
-        if (_stricmp(parent->infor.maTB, ma) < 0)
-            Node = parent->right;
-        else
-            Node = parent->left;
-    }
-    return DeleteNode(root, Node);
+    BSTree nodetoDelete;
+    if (parent == NULL) 
+        nodetoDelete = root;    
+    else if (_stricmp(parent->left->infor.maTB, ma) == 0) 
+        nodetoDelete = parent->left;    
+    else 
+        nodetoDelete = parent->right;
+    if (nodetoDelete == NULL) 
+        return;
+    DeleteNode(parent == NULL ? root : (parent->left == nodetoDelete ? parent->left : parent->right), nodetoDelete);
 }
+
+
