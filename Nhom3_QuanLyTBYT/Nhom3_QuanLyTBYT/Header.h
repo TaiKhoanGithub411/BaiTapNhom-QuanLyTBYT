@@ -13,25 +13,27 @@ struct TBYT
 	Date ngaySD;
 	int soLuong;
 	char PhongSD[30];
+	int DonGia;
 };
 typedef TBYT Data;
 struct BSNode
 {
 	Data infor;
 	BSNode* left;
-	BSNode* right; 
+	BSNode* right;
 };
 typedef BSNode* BSTree;
 //================================================================
 BSNode* CreatNode(TBYT x);
 void CreatRoot(BSTree& root);
 int InsertNode(BSTree& root, TBYT x);
-int DocFile(BSTree& root, char* filename);
 void XuatTieuDe();
 void XuatTB(TBYT x);
 void Xuat_NLR(BSTree root);
 void Xuat_LNR(BSTree root);
 void Xuat_LRN(BSTree root);
+int SoSanhTen_Ma_Phong(TBYT a, TBYT b, int compare);
+int DocFile(BSTree& root, char* filename, int compare);
 //================================================================
 BSNode* CreatNode(TBYT x)
 {
@@ -64,13 +66,45 @@ int InsertNode(BSTree& root, TBYT x)
 		return -1;
 	return 1;
 }
-int DocFile(BSTree& root, char* filename)
+int SoSanhTen_Ma_Phong(TBYT a, TBYT b, int compare)
+{
+	switch (compare)
+	{
+	case 1:
+		return _stricmp(a.maTB, b.maTB);
+	case 2:
+		return _stricmp(a.TenTB, b.TenTB);
+	case 3:
+		return _stricmp(a.PhongSD, b.PhongSD);
+	default:
+		return 0;
+	}
+}
+
+void Insert(BSTree& root, TBYT x, int compare)
+{
+	if (root == NULL)
+	{
+		root = new BSNode;
+		root->infor = x;
+		root->left = root->right = NULL;
+	}
+	else
+	{
+		int result = SoSanhTen_Ma_Phong(x, root->infor, compare);
+		if (result < 0)
+			Insert(root->left, x, compare);
+		else
+			Insert(root->right, x, compare);
+	}
+}
+int DocFile(BSTree& root, char* filename, int compare)
 {
 	ifstream in(filename);
 	if (!in)
 		return 0;
 	KeyType maTB;
-	int kq;
+	//int kq;
 	CreatRoot(root);
 	TBYT x;
 	while (!in.eof())
@@ -85,9 +119,11 @@ int DocFile(BSTree& root, char* filename)
 		in >> x.ngaySD.nam;
 		in >> x.soLuong;
 		in >> x.PhongSD;
-		kq = InsertNode(root, x);
+		in >> x.DonGia;
+		/*kq = InsertNode(root, x);
 		if (kq == 0 || kq == -1)
-			return 0;
+			return 0;*/
+		Insert(root, x, compare);
 	}
 	in.close();
 	return 1;
@@ -97,7 +133,7 @@ void XuatTieuDe()
 	int i;
 	cout << endl;
 	cout << '.';
-	for (i = 1; i <= 100; i++)
+	for (i = 1; i <= 115; i++)
 		cout << '_';
 	cout << '.' << endl;
 	cout << setiosflags(ios::left);
@@ -113,9 +149,10 @@ void XuatTieuDe()
 		<< setw(12) << "So luong"
 		<< '|'
 		<< setw(15) << "Phong SD"
+		<< '|' << setw(15) << "Don Gia Nhap"
 		<< '|';
 	cout << endl << '|';
-	for (i = 1; i <= 100; i++)
+	for (i = 1; i <= 115; i++)
 		cout << '-';
 	cout << '|';
 
@@ -136,6 +173,7 @@ void XuatTB(TBYT x)
 		<< setw(9) << x.ngaySD.nam
 		<< '|' << setw(12) << x.soLuong
 		<< '|' << setw(15) << x.PhongSD
+		<< '|' << setw(15) << x.DonGia
 		<< '|';
 
 }

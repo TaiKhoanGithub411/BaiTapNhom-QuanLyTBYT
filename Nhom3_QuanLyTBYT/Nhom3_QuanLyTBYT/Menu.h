@@ -44,7 +44,7 @@ void XulyMenuChinh(int menu, BSTree& root)
 		break;
 	case 1:
 		cout << "\n1. Tao du lieu thiet bi\n";
-		DocFile(root, (char*)"TBYT.txt");
+		DocFile(root, (char*)"TBYT.txt",1);
 		cout << "\nDanh sach du lieu moi tao la:\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
@@ -206,42 +206,62 @@ void XuLyMenuTK(int menu, BSTree root)
 }
 void MenuSapXep()
 {
-	cout << "======================== MENU QUAN LY THIET BI Y TE ==================================";
-	cout << "\n0. Tro ve chuong trinh chinh";
-	cout << "\n1. Sap xep theo ma thiet bi";
-	cout << "\n2. Sap xep theo ten";
-	cout << "\n3. Sap xep theo phong su dung";
+	cout << "======================== MENU QUAN LY THIET BI Y TE - SAP XEP =========================";
+	cout << "\n0.Tro ve chuong trinh chinh";
+	cout << "\n1.Sap xep theo ma thiet bi";
+	cout << "\n2.Sap xep theo ten";
+	cout << "\n3.Sap xep theo phong su dung";
 }
 void XuLyMenuSX(int menu, BSTree& root)
 {
 	switch (menu)
 	{
 	case 0:
-		cout << "\n0. Tro ve chuong trinh chinh\n";
-		break;
+		cout << "\n0.Tro ve chuong trinh chinh\n";
+		return;
 	case 1:
-		cout << "\n1. Sap xep theo ma thiet bi\n";
+		cout << "\n1.Sap xep theo ma thiet bi\n";
 		XuatTieuDe();
+		Xuat_NLR(root);
+		if (DocFile(root, (char*)"TBYT.txt", 1)) {
+			cout << "\nDanh sach sap xep theo ma thiet bi:\n";
+			XuatTieuDe();
+			Xuat_LNR(root);
+		}
+		cout << endl;
 		break;
 	case 2:
-		cout << "\n2. Sap xep theo ten\n";
+		cout << "\n2.Sap xep theo ten\n";
 		XuatTieuDe();
+		Xuat_NLR(root);
+		if (DocFile(root, (char*)"TBYT.txt", 2)) {
+			cout << "\nDanh sach sap xep theo ten thiet bi:\n";
+			XuatTieuDe();
+			Xuat_LNR(root);
+		}
+		cout << endl;
 		break;
 	case 3:
-		cout << "\n3. Sap xep theo phong su dung\n";
+		cout << "\n3.Sap xep theo phong su dung\n";
 		XuatTieuDe();
+		Xuat_NLR(root);
+		if (DocFile(root, (char*)"TBYT.txt", 3))
+		{
+			cout << "\nDanh sach sap xep theo phong su dung:\n";
+			XuatTieuDe();
+			Xuat_LNR(root);
+		}
+		cout << endl;
 		break;
-		
 	}
 }
 void MenuXoa()
 {
-	cout << "======================== MENU QUAN LY THIET BI Y TE ==================================";
+	cout << "======================== MENU QUAN LY THIET BI Y TE - XOA ==================================";
 	cout << "\n0. Tro ve chuong trinh chinh";
 	cout << "\n1. Xoa theo ma thiet bi";
 	cout << "\n2. Xoa theo ten";
-	cout << "\n3. Xoa theo ngay thang nam nhap";
-	cout << "\n4. Xoa theo phong su dung";
+	cout << "\n3. Xoa theo phong su dung";
 }
 void XuLyMenuXoa(int menu, BSTree& root)
 {
@@ -273,22 +293,18 @@ void XuLyMenuXoa(int menu, BSTree& root)
 		cout << "\nNhap ten thiet bi can xoa: ";
 		cin >> x;
 		cout << "\nDanh sach sau khi xoa thiet bi co ten " << x << " la\n";
-		DeleteMaTB(root, x);
+		DeleteAllByTen(root, x);
 		XuatTieuDe();
 		Xuat_NLR(root);
 		break;
 	case 3:
-		cout << "\n3. Xoa theo ngay thang nam nhap";
-		XuatTieuDe();
-		break;
-	case 4:
 		cout << "\n4. Xoa theo phong su dung";
 		XuatTieuDe();
 		Xuat_NLR(root);
 		cout << "\nNhap phong su dung can xoa: ";
 		cin >> x;
 		cout << "\nDanh sach sau khi xoa phong su dung " << x << " la\n";
-		DeletePhongSD(root, x);
+		DeleteAllPhong(root, x);
 		XuatTieuDe();
 		Xuat_NLR(root);
 		break;
@@ -296,7 +312,7 @@ void XuLyMenuXoa(int menu, BSTree& root)
 }
 void MenuThem_ChinhSua()
 {
-	cout << "======================== MENU QUAN LY THIET BI Y TE ==================================";
+	cout << "======================== MENU QUAN LY THIET BI Y TE - THEM CHINH SUA ==================================";
 	cout << "\n0. Tro ve chuong trinh chinh";
 	cout << "\n1. Them mot thiet bi";
 	cout << "\n2. Chinh sua ten thiet bi";

@@ -6,7 +6,6 @@ Date TaoNgayThangNam(int ngay, int thang, int nam);
 BSTree Search_NgayThangNamNhap(BSTree root, Date nhap);
 BSTree Search_NgayThangNamSD(BSTree root, Date nhap);
 BSTree Search_Parent_MaTB(BSTree root, KeyType ma);
-BSTree Search_Parent_TenTB(BSTree root, char ten[30]);
 BSTree FindMinRight(BSTree root);
 void DeleteNode(BSTree& root, BSTree node);
 void DeleteMaTB(BSTree& root, KeyType ma);
@@ -17,19 +16,19 @@ BSTree Search_MaTB(BSTree root, KeyType ma)
 {
     if (root == NULL) return NULL;
     BSTree parent = Search_Parent_MaTB(root, ma);
-    if (parent == NULL) 
+    if (parent == NULL)
     {
-        if (_stricmp(root->infor.maTB, ma) == 0) 
+        if (_stricmp(root->infor.maTB, ma) == 0)
             return root;
-        else 
+        else
             return NULL;
     }
     if (_stricmp(root->infor.maTB, ma) < 0)
         return Search_MaTB(root->right, ma);
-    else 
+    else
         return Search_MaTB(root->left, ma);
 }
-BSTree Search_TenTB(BSTree root, char ten[30]) 
+BSTree Search_TenTB(BSTree root, char ten[30])
 {
     BSTree result;
     CreatRoot(result);
@@ -50,7 +49,7 @@ BSTree Search_TenTB(BSTree root, char ten[30])
                 InsertNode(result, rightResult->infor);
         }
     }
-        return result;
+    return result;
 }
 BSTree Search_PhongSD(BSTree root, char phong[30])
 {
@@ -134,7 +133,7 @@ BSTree Search_Parent_MaTB(BSTree root, KeyType ma)
     BSTree parent = NULL, current = root;
     while (current != NULL)
     {
-        if (_stricmp(current->infor.maTB, ma)==0)
+        if (_stricmp(current->infor.maTB, ma) == 0)
             return parent;
         if (_stricmp(current->infor.maTB, ma) < 0)
         {
@@ -148,45 +147,8 @@ BSTree Search_Parent_MaTB(BSTree root, KeyType ma)
         }
     }
 }
-BSTree Search_Parent_TenTB(BSTree root, char ten[30])
-{
-    BSTree parent = NULL, current = root;
-    while (current!=NULL)
-    {
-        if (_stricmp(current->infor.TenTB, ten) == 0)
-            return parent;
-        if (_stricmp(current->infor.TenTB, ten) < 0)
-        {
-            parent = current;
-            current = current->right;
-        }
-        else
-        {
-            parent = current;
-            current = current->left;
-        }
-    }
-}
-BSTree Search_Parent_PhongSD(BSTree root, char phong[30])
-{
-    BSTree parent = NULL, current = root;
-    while (current!=NULL)
-    {
-        if (_stricmp(current->infor.PhongSD, phong) == 0)
-            return parent;
-        if (_stricmp(current->infor.PhongSD, phong) < 0)
-        {
-            parent = current;
-            current = current->right;
-        }
-        else
-        {
-            parent = current;
-            current = current->left;
-        }
-    }
-}
-BSTree FindMinRight(BSTree root) 
+
+BSTree FindMinRight(BSTree root)
 {
     if (root == NULL)
         return NULL;
@@ -195,11 +157,11 @@ BSTree FindMinRight(BSTree root)
         root = root->left;
     return root;
 }
-void DeleteNode(BSTree& root, BSTree nodetoDelete) 
+void DeleteNode(BSTree& root, BSTree nodetoDelete)
 {
     if (nodetoDelete == NULL)
         return;
-    if (nodetoDelete->left == NULL && nodetoDelete->right == NULL) 
+    if (nodetoDelete->left == NULL && nodetoDelete->right == NULL)
     {
         delete nodetoDelete;
         root = NULL;
@@ -210,68 +172,81 @@ void DeleteNode(BSTree& root, BSTree nodetoDelete)
         delete nodetoDelete;
         root = temp;
     }
-    else if (nodetoDelete->right == NULL) 
+    else if (nodetoDelete->right == NULL)
     {
         BSTree temp = nodetoDelete->left;
         delete nodetoDelete;
         root = temp;
     }
-    else 
+    else
     {
         BSTree minRight = FindMinRight(nodetoDelete->right);
         nodetoDelete->infor = minRight->infor;
         DeleteNode(nodetoDelete->right, minRight);
     }
 }
-
-void DeleteMaTB(BSTree& root, KeyType ma) 
+void DeleteMaTB(BSTree& root, KeyType ma)
 {
     if (root == NULL)
         return;
-    BSTree parent = Search_Parent_MaTB(root, ma);
-    BSTree nodetoDelete;
-    if (parent == NULL) 
-        nodetoDelete = root;    
-    else if (_stricmp(parent->left->infor.maTB, ma) == 0) 
-        nodetoDelete = parent->left;    
-    else 
-        nodetoDelete = parent->right;
-    if (nodetoDelete == NULL) 
+    if (_stricmp(root->infor.maTB, ma) == 0)
+    {
+        BSTree nodeToDelete = root;
+        DeleteNode(root, nodeToDelete);
         return;
-    DeleteNode(parent == NULL ? root : (parent->left == nodetoDelete ? parent->left : parent->right), nodetoDelete);
+    }
+    if (root->left != NULL)
+        DeleteMaTB(root->left, ma);
+    if (root->right != NULL)
+        DeleteMaTB(root->right, ma);
 }
 void DeleteTen(BSTree& root, char x[30])
 {
     if (root == NULL)
         return;
-    BSTree parent = Search_Parent_TenTB(root,x);
-    BSTree nodetoDelete;
-    if (parent == NULL)
-        nodetoDelete = root;
-    else if (_stricmp(parent->left->infor.TenTB, x) == 0)
-        nodetoDelete = parent->left;
-    else
-        nodetoDelete = parent->right;
-    if (nodetoDelete == NULL)
+    if (_stricmp(root->infor.TenTB, x) == 0)
+    {
+        BSTree nodeToDelete = root;
+        DeleteNode(root, nodeToDelete);
         return;
-    DeleteNode(parent == NULL ? root : (parent->left == nodetoDelete ? parent->left : parent->right), nodetoDelete);
+    }
+    if (root->left != NULL)
+        DeleteTen(root->left, x);
+    if (root->right != NULL)
+        DeleteTen(root->right, x);
 }
-void DeletePhongSD(BSTree& root, char x[30])
+void DeleteAllByTen(BSTree& root, char x[30])
 {
     if (root == NULL)
         return;
-    BSTree parent = Search_Parent_PhongSD(root, x);
-    BSTree nodetoDelete;
-    if (parent == NULL)
-        nodetoDelete = root;
-    else if (_stricmp(parent->left->infor.PhongSD, x) == 0)
-        nodetoDelete = parent->left;
-    else
-        nodetoDelete = parent->right;
-    if (nodetoDelete == NULL)
-        return;
-    DeleteNode(parent == NULL ? root : (parent->left == nodetoDelete ? parent->left : parent->right), nodetoDelete);
+    DeleteTen(root, x);
+    if (root->left != NULL)
+        DeleteAllByTen(root->left, x);
+    if (root->right != NULL)
+        DeleteAllByTen(root->right, x);
 }
-
-
-
+void DeletePhong(BSTree& root, char x[30])
+{
+    if (root == NULL)
+        return;
+    if (_stricmp(root->infor.PhongSD, x) == 0)
+    {
+        BSTree nodeToDelete = root;
+        DeleteNode(root, nodeToDelete);
+        return;
+    }
+    if (root->left != NULL)
+        DeletePhong(root->left, x);
+    if (root->right != NULL)
+        DeletePhong(root->right, x);
+}
+void DeleteAllPhong(BSTree& root, char x[30])
+{
+    if (root == NULL)
+        return;
+    DeletePhong(root, x);
+    if (root->left != NULL)
+        DeleteAllPhong(root->left, x);
+    if (root->right != NULL)
+        DeleteAllPhong(root->right, x);
+}
