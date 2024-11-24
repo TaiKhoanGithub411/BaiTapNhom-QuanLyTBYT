@@ -5,7 +5,6 @@ BSTree Search_PhongSD(BSTree root, char phong[30]);
 Date TaoNgayThangNam(int ngay, int thang, int nam);
 BSTree Search_NgayThangNamNhap(BSTree root, Date nhap);
 BSTree Search_NgayThangNamSD(BSTree root, Date nhap);
-BSTree Search_Parent_MaTB(BSTree root, KeyType ma);
 BSTree FindMinRight(BSTree root);
 void DeleteNode(BSTree& root, BSTree node);
 void DeleteMaTB(BSTree& root, KeyType ma);
@@ -14,19 +13,18 @@ void DeletePhongSD(BSTree& root, char x[30]);
 //======================================================
 BSTree Search_MaTB(BSTree root, KeyType ma)
 {
-    if (root == NULL) return NULL;
-    BSTree parent = Search_Parent_MaTB(root, ma);
-    if (parent == NULL)
+    BSTree current = root;
+    while (current != NULL)
     {
-        if (_stricmp(root->infor.maTB, ma) == 0)
-            return root;
+        int comparison = _stricmp(current->infor.maTB, ma);
+        if (comparison == 0)
+            return current;
+        else if (comparison < 0)
+            current = current->right;
         else
-            return NULL;
+            current = current->left;
     }
-    if (_stricmp(root->infor.maTB, ma) < 0)
-        return Search_MaTB(root->right, ma);
-    else
-        return Search_MaTB(root->left, ma);
+    return NULL;
 }
 BSTree Search_TenTB(BSTree root, char ten[30])
 {
@@ -128,26 +126,6 @@ BSTree Search_NgayThangNamSD(BSTree root, Date nhap)
     }
     return result;
 }
-BSTree Search_Parent_MaTB(BSTree root, KeyType ma)
-{
-    BSTree parent = NULL, current = root;
-    while (current != NULL)
-    {
-        if (_stricmp(current->infor.maTB, ma) == 0)
-            return parent;
-        if (_stricmp(current->infor.maTB, ma) < 0)
-        {
-            parent = current;
-            current = current->right;
-        }
-        else
-        {
-            parent = current;
-            current = current->left;
-        }
-    }
-}
-
 BSTree FindMinRight(BSTree root)
 {
     if (root == NULL)

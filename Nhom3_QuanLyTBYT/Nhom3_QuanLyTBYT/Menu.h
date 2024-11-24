@@ -44,7 +44,7 @@ void XulyMenuChinh(int menu, BSTree& root)
 		break;
 	case 1:
 		cout << "\n1. Tao du lieu thiet bi\n";
-		DocFile(root, (char*)"TBYT.txt",1);
+		DocFile(root, (char*)"TBYT.txt");
 		cout << "\nDanh sach du lieu moi tao la:\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
@@ -146,7 +146,7 @@ void XuLyMenuTK(int menu, BSTree root)
 		p = Search_TenTB(root, x);
 		if (p != NULL)
 		{
-			cout << "\nThiet bi co ten " << x << "la\n";
+			cout << "\nThiet bi co ten " << x << " la\n";
 			XuatTieuDe();
 			Xuat_LNR(p);
 		}
@@ -208,9 +208,8 @@ void MenuSapXep()
 {
 	cout << "======================== MENU QUAN LY THIET BI Y TE - SAP XEP =========================";
 	cout << "\n0.Tro ve chuong trinh chinh";
-	cout << "\n1.Sap xep theo ma thiet bi";
-	cout << "\n2.Sap xep theo ten";
-	cout << "\n3.Sap xep theo phong su dung";
+	cout << "\n1.Sap xep tang theo ma thiet bi";
+	cout << "\n2.Sap xep giam theo ma thiet bi";
 }
 void XuLyMenuSX(int menu, BSTree& root)
 {
@@ -220,38 +219,20 @@ void XuLyMenuSX(int menu, BSTree& root)
 		cout << "\n0.Tro ve chuong trinh chinh\n";
 		return;
 	case 1:
-		cout << "\n1.Sap xep theo ma thiet bi\n";
+		cout << "\n1.Sap xep tang theo ma thiet bi\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
-		if (DocFile(root, (char*)"TBYT.txt", 1)) {
-			cout << "\nDanh sach sap xep theo ma thiet bi:\n";
-			XuatTieuDe();
-			Xuat_LNR(root);
-		}
-		cout << endl;
+		cout << "\nDanh sach sau khi sap xep tang theo ma thiet bi\n";
+		XuatTieuDe();
+		Xuat_LNR(root);
 		break;
 	case 2:
-		cout << "\n2.Sap xep theo ten\n";
+		cout << "\n2.Sap xep giam theo ma thiet bi\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
-		if (DocFile(root, (char*)"TBYT.txt", 2)) {
-			cout << "\nDanh sach sap xep theo ten thiet bi:\n";
-			XuatTieuDe();
-			Xuat_LNR(root);
-		}
-		cout << endl;
-		break;
-	case 3:
-		cout << "\n3.Sap xep theo phong su dung\n";
+		cout << "\nDanh sach sau khi sap xep giam theo ma thiet bi\n";
 		XuatTieuDe();
-		Xuat_NLR(root);
-		if (DocFile(root, (char*)"TBYT.txt", 3))
-		{
-			cout << "\nDanh sach sap xep theo phong su dung:\n";
-			XuatTieuDe();
-			Xuat_LNR(root);
-		}
-		cout << endl;
+		Xuat_RNL(root);
 		break;
 	}
 }

@@ -27,13 +27,12 @@ typedef BSNode* BSTree;
 BSNode* CreatNode(TBYT x);
 void CreatRoot(BSTree& root);
 int InsertNode(BSTree& root, TBYT x);
+int DocFile(BSTree& root, char* filename);
 void XuatTieuDe();
 void XuatTB(TBYT x);
 void Xuat_NLR(BSTree root);
 void Xuat_LNR(BSTree root);
-void Xuat_LRN(BSTree root);
-int SoSanhTen_Ma_Phong(TBYT a, TBYT b, int compare);
-int DocFile(BSTree& root, char* filename, int compare);
+void Xuat_RNL(BSTree root);
 //================================================================
 BSNode* CreatNode(TBYT x)
 {
@@ -55,7 +54,6 @@ int InsertNode(BSTree& root, TBYT x)
 	{
 		if (_stricmp(root->infor.maTB, x.maTB) == 0)
 			return 0;
-
 		if (_stricmp(root->infor.maTB, x.maTB) > 0)
 			return InsertNode(root->left, x);
 		else
@@ -66,45 +64,13 @@ int InsertNode(BSTree& root, TBYT x)
 		return -1;
 	return 1;
 }
-int SoSanhTen_Ma_Phong(TBYT a, TBYT b, int compare)
-{
-	switch (compare)
-	{
-	case 1:
-		return _stricmp(a.maTB, b.maTB);
-	case 2:
-		return _stricmp(a.TenTB, b.TenTB);
-	case 3:
-		return _stricmp(a.PhongSD, b.PhongSD);
-	default:
-		return 0;
-	}
-}
-
-void Insert(BSTree& root, TBYT x, int compare)
-{
-	if (root == NULL)
-	{
-		root = new BSNode;
-		root->infor = x;
-		root->left = root->right = NULL;
-	}
-	else
-	{
-		int result = SoSanhTen_Ma_Phong(x, root->infor, compare);
-		if (result < 0)
-			Insert(root->left, x, compare);
-		else
-			Insert(root->right, x, compare);
-	}
-}
-int DocFile(BSTree& root, char* filename, int compare)
+int DocFile(BSTree& root, char* filename)
 {
 	ifstream in(filename);
 	if (!in)
 		return 0;
 	KeyType maTB;
-	//int kq;
+	int kq;
 	CreatRoot(root);
 	TBYT x;
 	while (!in.eof())
@@ -120,10 +86,9 @@ int DocFile(BSTree& root, char* filename, int compare)
 		in >> x.soLuong;
 		in >> x.PhongSD;
 		in >> x.DonGia;
-		/*kq = InsertNode(root, x);
+		kq = InsertNode(root, x);
 		if (kq == 0 || kq == -1)
-			return 0;*/
-		Insert(root, x, compare);
+			return 0;
 	}
 	in.close();
 	return 1;
@@ -195,12 +160,12 @@ void Xuat_LNR(BSTree root)
 		Xuat_LNR(root->right);
 	}
 }
-void Xuat_LRN(BSTree root)
+void Xuat_RNL(BSTree root)
 {
 	if (root != NULL)
 	{
-		Xuat_LRN(root->left);
-		Xuat_LRN(root->right);
+		Xuat_RNL(root->right);
 		XuatTB(root->infor);
+		Xuat_RNL(root->left);
 	}
 }
