@@ -1,3 +1,5 @@
+Version 10:15am 24/11/2024 Hàm tìm node cha vô dụng, nên bỏ các hàm tìm node cha trừ tìm node cha của tìm theo maTB, xong hàm xóa, cũng xóa được các phòng tên trung nhau 
+
 Version 22:15pm 23/11/2024 Sửa xong hàm xóa cho Linh, Linh đã làm các menu con cho chương trình
 
 Version 17:22pm 23/11/2024 Làm thêm menu sắp xếp, đã có hàm tìm trả về node cha của node cần tìm
