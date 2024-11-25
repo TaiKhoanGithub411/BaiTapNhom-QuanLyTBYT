@@ -10,21 +10,21 @@ void DeleteNode(BSTree& root, BSTree node);
 void DeleteMaTB(BSTree& root, KeyType ma);
 void DeleteTen(BSTree& root, char x[30]);
 void DeletePhongSD(BSTree& root, char x[30]);
+void ThemTB(BSTree& root, TBYT newDevice);
 //======================================================
 BSTree Search_MaTB(BSTree root, KeyType ma)
 {
-    BSTree current = root;
-    while (current != NULL)
+    while (root != NULL)
     {
-        int comparison = _stricmp(current->infor.maTB, ma);
-        if (comparison == 0)
-            return current;
-        else if (comparison < 0)
-            current = current->right;
-        else
-            current = current->left;
+        if (_stricmp(root->infor.maTB, ma) == 0)
+            return root;
+        if (root->left != NULL)
+            Search_MaTB(root->left, ma);
+        if (root->right != NULL)
+            Search_MaTB(root->right, ma);
+        
     }
-    return NULL;
+    return root;
 }
 BSTree Search_TenTB(BSTree root, char ten[30])
 {
@@ -227,4 +227,18 @@ void DeleteAllPhong(BSTree& root, char x[30])
         DeleteAllPhong(root->left, x);
     if (root->right != NULL)
         DeleteAllPhong(root->right, x);
+}
+void ThemTB(BSTree& root, TBYT newDevice) {
+
+    bool kt;
+    do 
+    {
+        if (Search_MaTB(root, newDevice.maTB) != NULL) {
+            cout << "\nMa thiet bi da ton tai. Vui long nhap lai.\n";
+            kt = true;
+        }
+        else 
+            kt = false;        
+    } while (kt);
+    InsertNode(root, newDevice);
 }
