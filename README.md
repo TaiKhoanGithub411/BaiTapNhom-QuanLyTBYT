@@ -1,3 +1,5 @@
+Version 13:30am 25/11/2024 Xong chức năng thêm - chỉnh sửa
+
 Version 20:25pm 24/11/2024 Do tôi bị khờ nên đã chỉ sai, đã sửa chữa lỗi lầm ở hàm sắp xếp (Cây nhị phân tìm kiếm chỉ sắp xếp được theo khóa, không có sắp được theo thuộc tính khác, đây là đặc trùng của cấy nhị phân tìm kiếm)
 
 Version 10:15am 24/11/2024 Hàm tìm node cha vô dụng, nên bỏ các hàm tìm node cha trừ tìm node cha của tìm theo maTB, xong hàm xóa, cũng xóa được các phòng tên trung nhau 
