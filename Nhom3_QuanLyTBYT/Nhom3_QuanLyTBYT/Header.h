@@ -118,7 +118,7 @@ void XuatTieuDe()
 		<< '|';
 	cout << endl << '|';
 	for (i = 1; i <= 115; i++)
-		cout << '-';
+		cout << '_';
 	cout << '|';
 
 }

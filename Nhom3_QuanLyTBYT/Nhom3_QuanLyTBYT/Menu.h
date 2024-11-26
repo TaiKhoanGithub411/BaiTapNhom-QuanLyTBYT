@@ -43,9 +43,14 @@ void XulyMenuChinh(int menu, BSTree& root)
 		cout << "\n0. Thoat chuong trinh\n";
 		break;
 	case 1:
-		cout << "\n1. Tao du lieu thiet bi\n";
-		DocFile(root, (char*)"TBYT.txt");
-		cout << "\nDanh sach du lieu moi tao la:\n";
+		if (root == NULL) 
+		{
+			cout << "\n1. Tao du lieu thiet bi\n";
+			DocFile(root, (char*)"TBYT.txt");
+			cout << "\nDanh sach du lieu moi tao la:\n";
+		}
+		else
+			cout << "\nDu lieu da duoc tao truoc do. Vui long tiep tuc cac thao tac khac.\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
 		cout << endl;
@@ -65,6 +70,7 @@ void XulyMenuChinh(int menu, BSTree& root)
 			XuLyMenuTK(chonmenu, root);
 			system("PAUSE");
 		} while (chonmenu > 0);
+		break;
 	case 4:
 		do
 		{
@@ -119,6 +125,7 @@ void XuLyMenuTK(int menu, BSTree root)
 	{
 	case 0:
 		cout << "\n0. Tro ve chuong trinh chinh";
+		cout << endl;
 		return;
 	case 1:
 		cout << "\n1. Tim kiem theo ma";
@@ -129,12 +136,12 @@ void XuLyMenuTK(int menu, BSTree root)
 		p = Search_MaTB(root, ma);
 		if (p != NULL)
 		{
-			cout << "\nThiet bi co ma " << ma << "la\n";
+			cout << "\nThiet bi co ma " << ma << " la\n";
 			XuatTieuDe();
 			XuatTB(p->infor);
 		}
 		else
-			cout << "\nKhong co ma " << ma << " trong danh sach";
+			cout << "\nKhong co ma " << ma << " trong danh sach\n";
 		break;
 
 	case 2:
@@ -255,7 +262,7 @@ void XuLyMenuXoa(int menu, BSTree& root)
 	{
 	case 0:
 		cout << "\n0. Tro ve chuong trinh chinh\n";
-		break;
+		return;
 	case 1:
 		cout << "\n1. Xoa theo ma thiet bi";
 		XuatTieuDe();
@@ -309,7 +316,7 @@ void XuLyMenuThem_ChinhSua(int menu, BSTree& root)
 	{
 	case 0:
 		cout << "\n0. Tro ve chuong trinh chinh\n";
-		break;
+		return;
 	case 1:
 		cout << "\n1.Them thiet bi";
 		XuatTieuDe();
@@ -350,71 +357,14 @@ void XuLyMenuThem_ChinhSua(int menu, BSTree& root)
 		cout << endl;
 		break;
 	case 2:
-		cout << "\n2. Chinh sua thong tin thiet bi\n";
+		cout << "\n2.Chinh sua thiet bi\n";
 		XuatTieuDe();
 		Xuat_NLR(root);
-		cout << "\nNhap ma thiet bi ban muon chinh sua: ";
-		cin >> ma;
-		p = Search_MaTB(root, ma);
-		if (p == NULL)
-		{
-			cout << "\nKhong co thiet bi co ma " << ma;
-			return;
-		}
-		cout << "\nThong tin hien tai cua thiet bi:\n";
+		ChinhSuaTB(root);
+		cout << "\nThong tin sau khi chinh sua:\n";
 		XuatTieuDe();
-		XuatTB(p->infor);
-		cout << "\nBan co muon sua ma thiet bi khong (Y/N)? ";
-		cin >> kq;
-		if (_strcmpi(kq, "Y") == 0) {
-			cout << "Nhap ma thiet bi moi: ";
-			cin.ignore();
-			cin.getline(p->infor.maTB, 30);
-		}
-		cout << "\nBan co muon sua ten thiet bi khong (Y/N)? ";
-		cin >> kq;
-		if (_strcmpi(kq, "Y") == 0) {
-			cout << "Nhap ten thiet bi moi: ";
-			cin.ignore();
-			cin.getline(p->infor.TenTB, 30);
-		}
-		cout << "\nBan co muon sua ngay nhap khong (Y/N)? ";
-		cin >> kq;
-		if (_strcmpi(kq, "Y") == 0) {
-			cout << "\nNhap ngay nhap moi (ngay thang nam): ";
-			cout << "\n - Nhap ngay: ";
-			cin >> p->infor.ngayNhap.ngay;
-			cout << " - Nhap thang: ";
-			cin >> p->infor.ngayNhap.thang;
-			cout << " - Nhap nam: ";
-			cin >> p->infor.ngayNhap.nam;
-		}
-		cout << "\nBan co muon sua ngay su dung khong (Y/N)? ";
-		cin >> kq;
-		if (_strcmpi(kq, "Y") == 0) {
-			cout << "\nNhap ngay su dung moi (ngay thang nam): ";
-			cout << "\n - Nhap ngay: ";
-			cin >> p->infor.ngaySD.ngay;
-			cout << " - Nhap thang: ";
-			cin >> p->infor.ngaySD.thang;
-			cout << " - Nhap nam: ";
-			cin >> p->infor.ngaySD.nam;
-		}
-		cout << "\nBan co muon sua so luong khong (Y/N)? ";
-		cin >> kq;
-		if (_strcmpi(kq, "Y") == 0) {
-			cout << "Nhap so luong moi: ";
-			cin >> p->infor.soLuong;
-		}
-		cout << "\nBan co muon sua phong su dung khong (Y/N)? ";
-		cin >> kq;
-		if (_strcmpi(kq, "Y") == 0) {
-			cout << "Nhap phong su dung moi: ";
-			cin.ignore();
-			cin.getline(p->infor.PhongSD, 30);
-		}
-		cout << "\Thong tin thiet bi sau chinh sua thong thon la\n";
-		XuatTieuDe();
-		XuatTB(p->infor);
+		Xuat_NLR(root);
+		cout << endl;
+		break;
 	}
 }

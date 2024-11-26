@@ -14,17 +14,14 @@ void ThemTB(BSTree& root, TBYT newDevice);
 //======================================================
 BSTree Search_MaTB(BSTree root, KeyType ma)
 {
-    while (root != NULL)
-    {
-        if (_stricmp(root->infor.maTB, ma) == 0)
-            return root;
-        if (root->left != NULL)
-            Search_MaTB(root->left, ma);
-        if (root->right != NULL)
-            Search_MaTB(root->right, ma);
-        
-    }
-    return root;
+    if (root == NULL)
+        return NULL;
+    if (_stricmp(root->infor.maTB, ma) == 0)
+        return root;
+    if (_stricmp(ma, root->infor.maTB) < 0)
+        return Search_MaTB(root->left, ma);
+    else
+        return Search_MaTB(root->right, ma);
 }
 BSTree Search_TenTB(BSTree root, char ten[30])
 {
@@ -241,4 +238,85 @@ void ThemTB(BSTree& root, TBYT newDevice) {
             kt = false;        
     } while (kt);
     InsertNode(root, newDevice);
+}
+void ChinhSuaTB(BSTree& root)
+{
+    KeyType maTB;
+    cout << "\nNhap ma thiet bi can chinh sua: ";
+    cin >> maTB;
+
+    BSTree p = Search_MaTB(root, maTB);
+    if (p == NULL) 
+    {
+        cout << "\nKhong tim thay ma " << maTB << " trong danh sach.\n";
+        return;
+    }
+    cout << "\nThong tin hien tai cua thiet bi:\n";
+    XuatTieuDe();
+    XuatTB(p->infor);
+    char kq[100];
+    cout << "\nBan co muon sua ma thiet bi khong (Y/N)? ";
+    cin >> kq;
+    if (_strcmpi(kq, "Y") == 0) 
+    {
+        cout << "Nhap ma thiet bi moi: ";
+        cin.ignore();
+        cin.getline(p->infor.maTB, 30);
+    }
+
+    cout << "\nBan co muon sua ten thiet bi khong (Y/N)? ";
+    cin >> kq;
+    if (_strcmpi(kq, "Y") == 0) 
+    {
+        cout << "Nhap ten thiet bi moi: ";
+        cin.ignore();
+        cin.getline(p->infor.TenTB, 30);
+    }
+
+    cout << "\nBan co muon sua ngay nhap khong (Y/N)? ";
+    cin >> kq;
+    if (_strcmpi(kq, "Y") == 0) 
+    {
+        cout << "\nNhap ngay nhap moi (ngay thang nam): ";
+        cout << "\n - Nhap ngay: ";
+        cin >> p->infor.ngayNhap.ngay;
+        cout << " - Nhap thang: ";
+        cin >> p->infor.ngayNhap.thang;
+        cout << " - Nhap nam: ";
+        cin >> p->infor.ngayNhap.nam;
+    }
+
+    cout << "\nBan co muon sua ngay su dung khong (Y/N)? ";
+    cin >> kq;
+    if (_strcmpi(kq, "Y") == 0) 
+    {
+        cout << "\nNhap ngay su dung moi (ngay thang nam): ";
+        cout << "\n - Nhap ngay: ";
+        cin >> p->infor.ngaySD.ngay;
+        cout << " - Nhap thang: ";
+        cin >> p->infor.ngaySD.thang;
+        cout << " - Nhap nam: ";
+        cin >> p->infor.ngaySD.nam;
+    }
+
+    cout << "\nBan co muon sua so luong khong (Y/N)? ";
+    cin >> kq;
+    if (_strcmpi(kq, "Y") == 0) 
+    {
+        cout << "Nhap so luong moi: ";
+        cin >> p->infor.soLuong;
+    }
+
+    cout << "\nBan co muon sua phong su dung khong (Y/N)? ";
+    cin >> kq;
+    if (_strcmpi(kq, "Y") == 0) 
+    {
+        cout << "Nhap phong su dung moi: ";
+        cin.ignore();
+        cin.getline(p->infor.PhongSD, 30);
+    }
+    if (_strcmpi(kq, "Y") == 0) {
+        cout << "Nhap don gia moi: ";
+        cin >> p->infor.DonGia;
+    }
 }
