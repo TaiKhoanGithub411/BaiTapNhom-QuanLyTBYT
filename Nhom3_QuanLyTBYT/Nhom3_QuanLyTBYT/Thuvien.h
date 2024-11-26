@@ -1,29 +1,29 @@
 //======================================================
-BSTree Search_MaTB(BSTree root, KeyType ma);
-BSTree Search_TenTB(BSTree root, char ten[30]);
+BSTree Search_Ma(BSTree root, KeyType ma);
+BSTree Search_Ten(BSTree root, char ten[30]);
 BSTree Search_PhongSD(BSTree root, char phong[30]);
 Date TaoNgayThangNam(int ngay, int thang, int nam);
 BSTree Search_NgayThangNamNhap(BSTree root, Date nhap);
 BSTree Search_NgayThangNamSD(BSTree root, Date nhap);
 BSTree FindMinRight(BSTree root);
 void DeleteNode(BSTree& root, BSTree node);
-void DeleteMaTB(BSTree& root, KeyType ma);
+void DeleteMa(BSTree& root, KeyType ma);
 void DeleteTen(BSTree& root, char x[30]);
-void DeletePhongSD(BSTree& root, char x[30]);
+void DeletePhong(BSTree& root, char x[30]);
 void ThemTB(BSTree& root, TBYT newDevice);
 //======================================================
-BSTree Search_MaTB(BSTree root, KeyType ma)
+BSTree Search_Ma(BSTree root, KeyType ma)
 {
     if (root == NULL)
         return NULL;
-    if (_stricmp(root->infor.maTB, ma) == 0)
+    if (_stricmp(root->infor.ma, ma) == 0)
         return root;
-    if (_stricmp(ma, root->infor.maTB) < 0)
-        return Search_MaTB(root->left, ma);
+    if (_stricmp(ma, root->infor.ma) < 0)
+        return Search_Ma(root->left, ma);
     else
-        return Search_MaTB(root->right, ma);
+        return Search_Ma(root->right, ma);
 }
-BSTree Search_TenTB(BSTree root, char ten[30])
+BSTree Search_Ten(BSTree root, char ten[30])
 {
     BSTree result;
     CreatRoot(result);
@@ -33,13 +33,13 @@ BSTree Search_TenTB(BSTree root, char ten[30])
             InsertNode(result, root->infor);
         if (root->left != NULL)
         {
-            BSTree leftResult = Search_TenTB(root->left, ten);
+            BSTree leftResult = Search_Ten(root->left, ten);
             if (leftResult != NULL)
                 InsertNode(result, leftResult->infor);
         }
         if (root->right != NULL)
         {
-            BSTree rightResult = Search_TenTB(root->right, ten);
+            BSTree rightResult = Search_Ten(root->right, ten);
             if (rightResult != NULL)
                 InsertNode(result, rightResult->infor);
         }
@@ -160,20 +160,20 @@ void DeleteNode(BSTree& root, BSTree nodetoDelete)
         DeleteNode(nodetoDelete->right, minRight);
     }
 }
-void DeleteMaTB(BSTree& root, KeyType ma)
+void DeleteMa(BSTree& root, KeyType ma)
 {
     if (root == NULL)
         return;
-    if (_stricmp(root->infor.maTB, ma) == 0)
+    if (_stricmp(root->infor.ma, ma) == 0)
     {
         BSTree nodeToDelete = root;
         DeleteNode(root, nodeToDelete);
         return;
     }
     if (root->left != NULL)
-        DeleteMaTB(root->left, ma);
+        DeleteMa(root->left, ma);
     if (root->right != NULL)
-        DeleteMaTB(root->right, ma);
+        DeleteMa(root->right, ma);
 }
 void DeleteTen(BSTree& root, char x[30])
 {
@@ -230,8 +230,8 @@ void ThemTB(BSTree& root, TBYT newDevice) {
     bool kt;
     do 
     {
-        if (Search_MaTB(root, newDevice.maTB) != NULL) {
-            cout << "\nMa thiet bi da ton tai. Vui long nhap lai.\n";
+        if (Search_Ma(root, newDevice.ma) != NULL) {
+            cout << "\nMa nhap hang da ton tai. Vui long nhap lai.\n";
             kt = true;
         }
         else 
@@ -239,29 +239,29 @@ void ThemTB(BSTree& root, TBYT newDevice) {
     } while (kt);
     InsertNode(root, newDevice);
 }
-void ChinhSuaTB(BSTree& root)
+void ChinhSua(BSTree& root)
 {
-    KeyType maTB;
-    cout << "\nNhap ma thiet bi can chinh sua: ";
-    cin >> maTB;
+    KeyType ma;
+    cout << "\nNhap ma nhap hang can chinh sua: ";
+    cin >> ma;
 
-    BSTree p = Search_MaTB(root, maTB);
+    BSTree p = Search_Ma(root, ma);
     if (p == NULL) 
     {
-        cout << "\nKhong tim thay ma " << maTB << " trong danh sach.\n";
+        cout << "\nKhong tim thay ma " << ma<< " trong danh sach.\n";
         return;
     }
     cout << "\nThong tin hien tai cua thiet bi:\n";
     XuatTieuDe();
     XuatTB(p->infor);
     char kq[100];
-    cout << "\nBan co muon sua ma thiet bi khong (Y/N)? ";
+    cout << "\nBan co muon sua ma nhap hang khong (Y/N)? ";
     cin >> kq;
     if (_strcmpi(kq, "Y") == 0) 
     {
-        cout << "Nhap ma thiet bi moi: ";
+        cout << "Nhap ma nhap hang moi: ";
         cin.ignore();
-        cin.getline(p->infor.maTB, 30);
+        cin.getline(p->infor.ma, 30);
     }
 
     cout << "\nBan co muon sua ten thiet bi khong (Y/N)? ";
@@ -315,6 +315,9 @@ void ChinhSuaTB(BSTree& root)
         cin.ignore();
         cin.getline(p->infor.PhongSD, 30);
     }
+   
+    cout << "\nBan co muon sua don gia khong (Y/N)? ";
+    cin >> kq;
     if (_strcmpi(kq, "Y") == 0) {
         cout << "Nhap don gia moi: ";
         cin >> p->infor.DonGia;

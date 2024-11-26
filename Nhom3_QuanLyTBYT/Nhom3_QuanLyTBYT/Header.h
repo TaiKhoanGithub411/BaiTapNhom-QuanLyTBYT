@@ -7,7 +7,7 @@ struct Date
 };
 struct TBYT
 {
-	KeyType maTB;
+	KeyType ma;
 	char TenTB[30];
 	Date ngayNhap;
 	Date ngaySD;
@@ -52,9 +52,9 @@ int InsertNode(BSTree& root, TBYT x)
 {
 	if (root != NULL)
 	{
-		if (_stricmp(root->infor.maTB, x.maTB) == 0)
+		if (_stricmp(root->infor.ma, x.ma) == 0)
 			return 0;
-		if (_stricmp(root->infor.maTB, x.maTB) > 0)
+		if (_stricmp(root->infor.ma, x.ma) > 0)
 			return InsertNode(root->left, x);
 		else
 			return InsertNode(root->right, x);
@@ -75,7 +75,7 @@ int DocFile(BSTree& root, char* filename)
 	TBYT x;
 	while (!in.eof())
 	{
-		in >> x.maTB;
+		in >> x.ma;
 		in >> x.TenTB;
 		in >> x.ngayNhap.ngay;
 		in >> x.ngayNhap.thang;
@@ -96,14 +96,13 @@ int DocFile(BSTree& root, char* filename)
 void XuatTieuDe()
 {
 	int i;
-	cout << endl;
-	cout << '.';
-	for (i = 1; i <= 115; i++)
+	cout << endl<<".";
+	for (i = 1; i <= 116; i++)
 		cout << '_';
-	cout << '.' << endl;
+	cout  <<"." << endl;
 	cout << setiosflags(ios::left);
 	cout << '|'
-		<< setw(8) << "MaTB"
+		<< setw(8) << "Ma nhap "
 		<< '|'
 		<< setw(30) << "Ten Thiet Bi"
 		<< '|'
@@ -117,16 +116,26 @@ void XuatTieuDe()
 		<< '|' << setw(15) << "Don Gia Nhap"
 		<< '|';
 	cout << endl << '|';
-	for (i = 1; i <= 115; i++)
+	for (i = 1; i <= 116; i++)
 		cout << '_';
 	cout << '|';
 
+}
+void XuatCuoi()
+{
+	int i;
+	cout << endl << "|";
+	for (i = 1; i <= 116; i++)
+		cout << '_';
+	cout << "|" << endl;
+	
+	
 }
 void XuatTB(TBYT x)
 {
 	cout << endl << '|';
 	cout << setiosflags(ios::left)
-		<< setw(8) << x.maTB
+		<< setw(8) << x.ma
 		<< '|' << setw(30) << x.TenTB
 		<< '|' << setw(15)
 		<< setw(2) << x.ngayNhap.ngay << '/'
