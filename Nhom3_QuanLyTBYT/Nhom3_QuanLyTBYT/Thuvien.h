@@ -12,6 +12,15 @@ void DeleteTen(BSTree& root, char x[30]);
 void DeletePhong(BSTree& root, char x[30]);
 void ThemTB(BSTree& root, TBYT newDevice);
 //======================================================
+void HopNhatCay(BSTree& root, BSTree source)
+{
+    if (source != NULL)
+    {
+        HopNhatCay(root, source->left);
+        InsertNode(root, source->infor);
+        HopNhatCay(root, source->right);
+    }
+}
 BSTree Search_Ma(BSTree root, KeyType ma)
 {
     if (root == NULL)
@@ -31,21 +40,14 @@ BSTree Search_Ten(BSTree root, char ten[30])
     {
         if (_stricmp(root->infor.TenTB, ten) == 0)
             InsertNode(result, root->infor);
-        if (root->left != NULL)
-        {
-            BSTree leftResult = Search_Ten(root->left, ten);
-            if (leftResult != NULL)
-                InsertNode(result, leftResult->infor);
-        }
-        if (root->right != NULL)
-        {
-            BSTree rightResult = Search_Ten(root->right, ten);
-            if (rightResult != NULL)
-                InsertNode(result, rightResult->infor);
-        }
+        BSTree left = Search_Ten(root->left, ten);
+        HopNhatCay(result, left);
+        BSTree right = Search_Ten(root->right, ten);
+        HopNhatCay(result, right);
     }
     return result;
 }
+
 BSTree Search_PhongSD(BSTree root, char phong[30])
 {
     BSTree result;
@@ -54,18 +56,10 @@ BSTree Search_PhongSD(BSTree root, char phong[30])
     {
         if (_stricmp(root->infor.PhongSD, phong) == 0)
             InsertNode(result, root->infor);
-        if (root->left != NULL)
-        {
-            BSTree left = Search_PhongSD(root->left, phong);
-            if (left != NULL)
-                InsertNode(result, left->infor);
-        }
-        if (root->right != NULL)
-        {
-            BSTree right = Search_PhongSD(root->right, phong);
-            if (right != NULL)
-                InsertNode(result, right->infor);
-        }
+        BSTree left = Search_PhongSD(root->left, phong);
+        HopNhatCay(result, left);
+        BSTree right = Search_PhongSD(root->right, phong);
+        HopNhatCay(result, right);
     }
     return result;
 }
@@ -85,18 +79,10 @@ BSTree Search_NgayThangNamNhap(BSTree root, Date nhap)
     {
         if (root->infor.ngayNhap.ngay == nhap.ngay && root->infor.ngayNhap.thang == nhap.thang && root->infor.ngayNhap.nam == nhap.nam)
             InsertNode(result, root->infor);
-        if (root->left != NULL)
-        {
-            BSTree left = Search_NgayThangNamNhap(root->left, nhap);
-            if (left != NULL)
-                InsertNode(result, left->infor);
-        }
-        if (root->right != NULL)
-        {
-            BSTree right = Search_NgayThangNamNhap(root->right, nhap);
-            if (right != NULL)
-                InsertNode(result, right->infor);
-        }
+        BSTree left = Search_NgayThangNamNhap(root->left, nhap);
+        HopNhatCay(result, left);
+        BSTree right = Search_NgayThangNamNhap(root->right, nhap);
+        HopNhatCay(result, right);
     }
     return result;
 }
@@ -108,18 +94,10 @@ BSTree Search_NgayThangNamSD(BSTree root, Date nhap)
     {
         if (root->infor.ngaySD.ngay == nhap.ngay && root->infor.ngaySD.thang == nhap.thang && root->infor.ngaySD.nam == nhap.nam)
             InsertNode(result, root->infor);
-        if (root->left != NULL)
-        {
-            BSTree left = Search_NgayThangNamSD(root->left, nhap);
-            if (left != NULL)
-                InsertNode(result, left->infor);
-        }
-        if (root->right != NULL)
-        {
-            BSTree right = Search_NgayThangNamSD(root->right, nhap);
-            if (right != NULL)
-                InsertNode(result, right->infor);
-        }
+        BSTree left = Search_NgayThangNamNhap(root->left, nhap);
+        HopNhatCay(result, left);
+        BSTree right = Search_NgayThangNamNhap(root->right, nhap);
+        HopNhatCay(result, right);
     }
     return result;
 }
